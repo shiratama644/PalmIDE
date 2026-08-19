@@ -1,0 +1,29 @@
+{
+  "_comment": "このファイルは Claude Code/settings.json に配線する例です。フックを使うには、プロジェクトの .claude/settings.json（または ~/.claude/settings.json）に同等のエントリをマージしてください。",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh .agent/hooks/pre_edit_guard.sh",
+            "_comment": "docs/・uploads/・PHASE*.md などへの編集をブロック（exit 2）"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh .agent/hooks/post_edit_verify.sh",
+            "_comment": "new/ の整合性（ブロック残存・リンク・不変値）を事後検証"
+          }
+        ]
+      }
+    ]
+  }
+}
